@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Ayah, WordToken as WordTokenType } from "@/lib/types";
 import WordBreakdown from "./WordBreakdown";
+import DependencyGraph from "./DependencyGraph";
 import WordDetailPanel from "./WordDetailPanel";
 
 // The treebank splits each orthographic word into morphological segments
@@ -55,6 +56,7 @@ export default function VerseView({
 }) {
   const [selectedWordId, setSelectedWordId] = useState<number | null>(null);
   const [showBreakdown, setShowBreakdown] = useState(false);
+  const [showGraph, setShowGraph] = useState(false);
 
   // Elided tokens (implied subject pronouns, omitted predicates, etc.) are
   // supplied by the grammarians but are not part of the mushaf text — keep the
@@ -109,11 +111,16 @@ export default function VerseView({
         <button onClick={() => setShowBreakdown((v) => !v)}>
           {showBreakdown ? "Hide breakdown" : "Word-by-word breakdown"}
         </button>
+        <button onClick={() => setShowGraph((v) => !v)}>
+          {showGraph ? "Hide dependency graph" : "Dependency graph"}
+        </button>
       </div>
 
       {showBreakdown && (
         <WordBreakdown words={realWords} onWordClick={setSelectedWordId} />
       )}
+
+      {showGraph && <DependencyGraph words={ayah.words} />}
 
       {selectedWord && (
         <WordDetailPanel word={selectedWord} onClose={() => setSelectedWordId(null)} />

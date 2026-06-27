@@ -375,7 +375,10 @@ def main():
         sentence_key = t.pop("_sentenceKey")
         own_token_id = t.pop("_tokenId")
         head_tid = None
-        if ref is not None and ref != 0 and ref != own_token_id:
+        # token_id / ref_token_id are 0-based, so ref == 0 is a real reference
+        # to the first token. A token is only a syntactic root when it points
+        # at itself (ref == own_token_id).
+        if ref is not None and ref != own_token_id:
             head_tid = sentence_token_to_tid.get(sentence_key, {}).get(ref)
         if head_tid is None or head_tid not in by_id:
             t["headId"] = None

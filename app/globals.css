@@ -462,6 +462,39 @@ button.secondary {
   font-size: 1rem;
 }
 
+/* ---- Dependency graph ---- */
+.dep-graph-scroll {
+  overflow-x: auto;
+  margin-top: 0.85rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.dep-graph {
+  display: block;
+  margin: 0 auto;
+}
+.dep-word {
+  font-size: 21px;
+  fill: var(--ink);
+}
+.dep-node.elided .dep-word {
+  fill: var(--muted);
+  font-style: italic;
+}
+.dep-pos {
+  font-size: 11px;
+  font-weight: 700;
+}
+.dep-translit {
+  font-size: 10px;
+  fill: var(--muted);
+}
+.dep-label {
+  font-size: 13px;
+}
+
 /* ---- Word detail drawer ---- */
 .drawer-overlay {
   position: fixed;

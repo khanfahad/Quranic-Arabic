@@ -27,9 +27,13 @@ const CATEGORY_LABELS: Record<string, string> = {
   other: "Other",
 };
 
+export function wordCategory(pos: string | null): string {
+  if (!pos) return "other";
+  return CATEGORY[pos] ?? "particle";
+}
+
 function categoryOf(word: WordToken): string {
-  if (!word.pos) return "other";
-  return CATEGORY[word.pos] ?? "particle";
+  return wordCategory(word.pos);
 }
 
 export function BreakdownLegend() {
