@@ -2,22 +2,25 @@ export default function AboutPage() {
   return (
     <>
       <div className="hero">
-        <h1>About I&apos;rab</h1>
-        <p>A study tool for students of Classical / Fus-ha Arabic.</p>
+        <h1>About</h1>
+        <p>
+          Quranic Arabic Explorer — word-by-word analysis for students of Classical /
+          Fuṣḥā Arabic.
+        </p>
       </div>
 
       <h2 className="section-title">What this is</h2>
       <p>
-        I&apos;rab lets you open any verse of the Quran and see it broken down word by
-        word: root, lemma, part of speech, full morphological features (verb form,
-        aspect, mood, voice, case, person, gender, number), and the traditional
-        إعراب (i&apos;rab) — each word&apos;s grammatical role and what it depends on,
-        including dependencies that span across multiple verses within the same
-        sentence.
+        Quranic Arabic Explorer lets you open any verse of the Quran and see it broken
+        down word by word: each word&apos;s type, transliteration and meaning, root,
+        morphology (verb form, aspect, mood, voice, case, person, gender, number), and
+        the traditional إعراب (iʿrāb) — its grammatical role. The verse text itself
+        stays true to the original Uthmani script; implied or elided words supplied by
+        grammarians are not inserted into it.
       </p>
       <p>
-        Click any word in a verse to see its full grammar, and browse every other
-        place in the Quran where the same root appears.
+        Click any word to see its full grammar and browse every other place in the
+        Quran where the same root appears.
       </p>
 
       <h2 className="section-title">Data sources &amp; licensing</h2>

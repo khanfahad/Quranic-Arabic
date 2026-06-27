@@ -206,6 +206,15 @@ def build_tag(pos, pos_en, person, gender, number, case, aspect, voice, state, d
         return " ".join([*parts, pos_en]) if parts else pos_en
     return pos_en
 
+
+def rel_english(rel_ar, rel_code):
+    """Readable English for a word's i'rab (syntactic role)."""
+    if rel_ar and rel_ar in REL_DESCRIPTIONS:
+        return REL_DESCRIPTIONS[rel_ar]
+    if rel_code and rel_code in REL_DESCRIPTIONS:
+        return REL_DESCRIPTIONS[rel_code]
+    return None
+
 FEATURE_LABELS = {
     "verb_form": {
         "(I)": "Form I", "(II)": "Form II", "(III)": "Form III", "(IV)": "Form IV",
@@ -273,7 +282,7 @@ WORD_FIELD_ORDER = [
     "gloss", "pos", "posAr", "tag", "lemma", "lemmaAr", "root", "rootAr",
     "segment", "verbForm", "verbAspect", "verbMood", "verbVoice", "nominalState",
     "nominalCase", "derivedNoun", "specialGroup", "person", "gender", "number",
-    "rel", "relAr", "headId", "headAyah", "headText",
+    "rel", "relAr", "relEn", "headId", "headAyah", "headText",
 ]
 
 
@@ -335,6 +344,7 @@ def build_token(row) -> dict:
         "features": features,
         "rel": na(row["rel_label"]),
         "relAr": na(row["rel_label_ar"]),
+        "relEn": rel_english(na(row["rel_label_ar"]), na(row["rel_label"])),
         # ref_token_id is scoped to (chapter_id, sentence_id) and refers to
         # another row's `token_id` (NOT the global `tid`) - resolved below.
         "_sentenceKey": (row["chapter_id"], row["sentence_id"]),

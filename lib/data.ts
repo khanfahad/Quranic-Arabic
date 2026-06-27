@@ -8,7 +8,7 @@ const WORD_FIELD_ORDER = [
   "gloss", "pos", "posAr", "tag", "lemma", "lemmaAr", "root", "rootAr",
   "segment", "verbForm", "verbAspect", "verbMood", "verbVoice", "nominalState",
   "nominalCase", "derivedNoun", "specialGroup", "person", "gender", "number",
-  "rel", "relAr", "headId", "headAyah", "headText",
+  "rel", "relAr", "relEn", "headId", "headAyah", "headText",
 ] as const;
 
 const FEATURE_KEYS = [
@@ -49,6 +49,7 @@ function decodeWord(raw: RawWord, surah: number, ayah: number): WordToken {
     features: features as any,
     rel: obj.rel as string | null,
     relAr: obj.relAr as string | null,
+    relEn: obj.relEn as string | null,
     headId: obj.headId as number | null,
     headSurah: obj.headAyah !== null ? surah : null,
     headAyah: obj.headAyah as number | null,

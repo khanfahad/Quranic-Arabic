@@ -261,29 +261,208 @@ button.secondary {
   text-decoration: underline;
 }
 
-/* ---- I'rab table ---- */
-.irab-table {
-  width: 100%;
-  margin-top: 0.75rem;
-  font-size: 0.88rem;
-  border-collapse: collapse;
-}
-.irab-table th,
-.irab-table td {
-  text-align: left;
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid var(--border);
-}
-.irab-table .arabic {
-  font-size: 1.2rem;
-}
-.irab-table tr.elided td {
-  color: var(--muted);
-  font-style: italic;
-}
 .rel-tag {
   color: var(--rel-color);
   font-weight: 600;
+}
+
+/* ---- Word-by-word breakdown cards ---- */
+:root {
+  --cat-verb: #1f8b4c;
+  --cat-verb-bg: #eaf7ef;
+  --cat-noun: #2273b5;
+  --cat-noun-bg: #e9f2fa;
+  --cat-particle: #c9772a;
+  --cat-particle-bg: #fbf1e5;
+  --cat-pronoun: #8245a8;
+  --cat-pronoun-bg: #f3ecf9;
+  --cat-other: #6b7378;
+  --cat-other-bg: #eef0f1;
+}
+
+.bd-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0 0.85rem;
+}
+.bd-chip {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--cat-other);
+  color: var(--cat-other);
+  background: var(--cat-other-bg);
+}
+.bd-chip.cat-verb {
+  border-color: var(--cat-verb);
+  color: var(--cat-verb);
+  background: var(--cat-verb-bg);
+}
+.bd-chip.cat-noun {
+  border-color: var(--cat-noun);
+  color: var(--cat-noun);
+  background: var(--cat-noun-bg);
+}
+.bd-chip.cat-particle {
+  border-color: var(--cat-particle);
+  color: var(--cat-particle);
+  background: var(--cat-particle-bg);
+}
+.bd-chip.cat-pronoun {
+  border-color: var(--cat-pronoun);
+  color: var(--cat-pronoun);
+  background: var(--cat-pronoun-bg);
+}
+.bd-chip .arabic {
+  font-size: 0.95rem;
+}
+
+.word-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.word-card {
+  border: 2px solid var(--cat-other);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.word-card.clickable {
+  cursor: pointer;
+  transition: box-shadow 0.12s ease, transform 0.12s ease;
+}
+.word-card.clickable:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+.word-card.cat-verb {
+  border-color: var(--cat-verb);
+}
+.word-card.cat-noun {
+  border-color: var(--cat-noun);
+}
+.word-card.cat-particle {
+  border-color: var(--cat-particle);
+}
+.word-card.cat-pronoun {
+  border-color: var(--cat-pronoun);
+}
+
+.word-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.cat-verb .word-card-head {
+  background: var(--cat-verb-bg);
+}
+.cat-noun .word-card-head {
+  background: var(--cat-noun-bg);
+}
+.cat-particle .word-card-head {
+  background: var(--cat-particle-bg);
+}
+.cat-pronoun .word-card-head {
+  background: var(--cat-pronoun-bg);
+}
+.word-card-ar {
+  font-size: 1.7rem;
+}
+.bd-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--cat-other);
+  padding: 0.18rem 0.55rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.bd-badge.cat-verb {
+  background: var(--cat-verb);
+}
+.bd-badge.cat-noun {
+  background: var(--cat-noun);
+}
+.bd-badge.cat-particle {
+  background: var(--cat-particle);
+}
+.bd-badge.cat-pronoun {
+  background: var(--cat-pronoun);
+}
+.bd-badge .arabic {
+  font-size: 0.85rem;
+}
+
+.word-card-body {
+  padding: 0.7rem 0.8rem 0.85rem;
+  font-size: 0.86rem;
+}
+.word-card-meaning {
+  margin-bottom: 0.5rem;
+}
+.wc-translit {
+  color: var(--accent);
+  font-style: italic;
+}
+.wc-dash {
+  color: var(--muted);
+  margin: 0 0.35rem;
+}
+.wc-gloss {
+  font-weight: 600;
+}
+.wc-root {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--accent-light);
+  border-radius: 7px;
+  margin-bottom: 0.55rem;
+}
+.wc-root-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.wc-root-letters {
+  color: var(--accent);
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+.wc-grammar {
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.wc-line {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.wc-key {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+.wc-val {
+  color: var(--ink);
+}
+.wc-irab-ar {
+  color: var(--rel-color);
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 /* ---- Word detail drawer ---- */

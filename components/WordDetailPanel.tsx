@@ -69,7 +69,8 @@ export default function WordDetailPanel({
             <>
               <dt>Grammatical role</dt>
               <dd>
-                <span className="rel-tag arabic">{word.relAr}</span> {word.rel}
+                {word.relAr && <span className="rel-tag arabic">{word.relAr}</span>}{" "}
+                {word.relEn ?? word.rel}
               </dd>
             </>
           )}

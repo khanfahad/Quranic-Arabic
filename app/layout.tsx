@@ -17,9 +17,9 @@ const uiFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "I'rab — Learn Quranic Arabic Grammar",
+  title: "Quranic Arabic Explorer",
   description:
-    "Explore the grammar, morphology, and meaning of any verse of the Quran, word by word.",
+    "Word-by-word analysis for Fuṣḥā Arabic students — the grammar, morphology, and iʿrāb of any verse of the Quran.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${arabicFont.variable} ${uiFont.variable}`}>
         <header className="site-header">
           <Link href="/" className="site-title">
-            إِعْرَاب <span className="site-title-en">I&apos;rab</span>
+            <span className="arabic">ٱلْقُرْآن</span>{" "}
+            <span className="site-title-en">Quranic Arabic Explorer</span>
           </Link>
           <nav className="site-nav">
             <Link href="/">Home</Link>

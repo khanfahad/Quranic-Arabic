@@ -33,6 +33,7 @@ export interface WordToken {
   features: WordFeatures;
   rel: string | null;
   relAr: string | null;
+  relEn: string | null;
   headId: number | null;
   headSurah: number | null;
   headAyah: number | null;

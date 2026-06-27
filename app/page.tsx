@@ -16,8 +16,11 @@ export default function HomePage() {
   return (
     <>
       <div className="hero">
-        <h1>Learn Quranic Arabic, verse by verse</h1>
-        <p>Pick a verse, see its full i&apos;rab, and click any word for its grammar.</p>
+        <h1>Quranic Arabic Explorer</h1>
+        <p>
+          Word-by-word analysis for Fuṣḥā Arabic students. Pick a verse and see every
+          word broken down by type, morphology, root, and iʿrāb.
+        </p>
       </div>
 
       <SurahPicker surahs={surahs} />
