@@ -142,7 +142,69 @@ POS_DESCRIPTIONS = {
     "حرف تحقيق": "verification particle",
     "أداة حصر": "restriction particle",
     "اسم فعل أمر": "imperative verbal noun",
+    "حروف مقطعة": "Quranic initial letters",
+    "واو المعية": "comitative particle (wa al-ma'iyyah)",
+    "حرف استدراك": "retraction particle",
+    "حرف جواب": "answer particle",
+    "حرف ردع": "deterrent particle",
+    "حرف سببية": "causative particle",
+    "حرف تسوية": "equalization particle",
+    "حرف تحضيض": "exhortation particle",
+    "حرف تفصيل": "detailing particle",
+    "أداة استثناء": "exceptive particle",
+    "حرف استقبال": "future particle",
+    "حرف ابتداء": "inceptive particle",
+    "حرف تفسير": "explanatory particle",
+    "حرف كاف": "preventive particle",
+    "حرف اضراب": "retraction particle",
+    "حرف واقع في جواب الشرط": "result particle (response to a condition)",
+    "حرف فجاءة": "surprise particle",
 }
+
+# Lookup tables for building a single combined English morphology tag per
+# word, in the style of corpus.quran.com (e.g. "1st person plural imperfect
+# verb", "genitive masculine singular noun") instead of itemizing every raw
+# feature code separately.
+PERSON_WORDS = {"1": "1st person", "2": "2nd person", "3": "3rd person"}
+GENDER_WORDS = {"M": "masculine", "F": "feminine"}
+NUMBER_WORDS = {"S": "singular", "D": "dual", "P": "plural"}
+CASE_WORDS = {"NOM": "nominative", "ACC": "accusative", "GEN": "genitive"}
+ASPECT_WORDS = {"PERF": "perfect", "IMPF": "imperfect", "IMPV": "imperative"}
+VOICE_WORDS = {"PASS": "passive"}
+STATE_WORDS = {"INDEF": "indefinite"}
+DERIVED_WORDS = {
+    "ACT_PCPL": "active participle",
+    "PASS_PCPL": "passive participle",
+    "VN": "verbal noun",
+}
+# POS codes whose nouns/adjectives/adverbs/pronouns can carry case/gender/
+# number/state marking worth surfacing in the combined tag.
+DECLINABLE_POS = {"N", "PN", "ADJ", "T", "LOC", "DEM", "REL"}
+
+
+def build_tag(pos, pos_en, person, gender, number, case, aspect, voice, state, derived):
+    person_w = PERSON_WORDS.get(person)
+    gender_w = GENDER_WORDS.get(gender)
+    number_w = NUMBER_WORDS.get(number)
+    case_w = CASE_WORDS.get(case)
+    aspect_w = ASPECT_WORDS.get(aspect)
+    voice_w = VOICE_WORDS.get(voice)
+    state_w = STATE_WORDS.get(state)
+    derived_w = DERIVED_WORDS.get(derived)
+
+    if pos == "V":
+        parts = [p for p in (person_w, gender_w, number_w, voice_w, aspect_w) if p]
+        return " ".join([*parts, "verb"]) if parts else "verb"
+    if pos == "PRON":
+        parts = [p for p in (person_w, gender_w, number_w) if p]
+        return " ".join([*parts, "pronoun"]) if parts else "pronoun"
+    if derived_w:
+        parts = [p for p in (case_w, gender_w, number_w, state_w) if p]
+        return " ".join([*parts, derived_w])
+    if pos in DECLINABLE_POS:
+        parts = [p for p in (case_w, gender_w, number_w, state_w) if p]
+        return " ".join([*parts, pos_en]) if parts else pos_en
+    return pos_en
 
 FEATURE_LABELS = {
     "verb_form": {
@@ -208,7 +270,7 @@ def load_rows(csv_path: str):
 # public/data/surah/{n}.json. Keep this in sync with lib/data.ts's decodeWord().
 WORD_FIELD_ORDER = [
     "id", "isElided", "location", "textUthmani", "textImlaai", "transliteration",
-    "gloss", "pos", "posAr", "lemma", "lemmaAr", "root", "rootAr",
+    "gloss", "pos", "posAr", "tag", "lemma", "lemmaAr", "root", "rootAr",
     "segment", "verbForm", "verbAspect", "verbMood", "verbVoice", "nominalState",
     "nominalCase", "derivedNoun", "specialGroup", "person", "gender", "number",
     "rel", "relAr", "headId", "headAyah", "headText",
@@ -240,6 +302,19 @@ def build_token(row) -> dict:
         "number": feature_label("number", row["number"]),
     }
     gloss = na(row["trans"])
+    pos = na(row["pos"])
+    pos_ar = na(row["pos_ar"])
+    pos_en = POS_DESCRIPTIONS.get(pos_ar, pos) if pos_ar else pos
+    tag = (
+        build_tag(
+            pos, pos_en,
+            na(row["person"]), na(row["gender"]), na(row["number"]),
+            na(row["nominal_case"]), na(row["verb_aspect"]), na(row["verb_voice"]),
+            na(row["nominal_state"]), na(row["derived_nouns"]),
+        )
+        if pos
+        else None
+    )
     return {
         "id": int(row["tid"]),
         "isElided": is_elided,
@@ -250,8 +325,9 @@ def build_token(row) -> dict:
         "textImlaai": na(row["imlaai_token"]),
         "transliteration": na(row["phonetic"]),
         "gloss": gloss,
-        "pos": na(row["pos"]),
-        "posAr": na(row["pos_ar"]),
+        "pos": pos,
+        "posAr": pos_ar,
+        "tag": tag,
         "lemma": na(row["lemma"]),
         "lemmaAr": na(row["lemma_ar"]),
         "root": na(row["root"]),

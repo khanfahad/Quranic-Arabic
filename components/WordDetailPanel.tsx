@@ -1,24 +1,9 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchRoot } from "@/lib/data";
 import type { RootEntry, WordToken } from "@/lib/types";
-
-const FEATURE_LABELS: Record<string, string> = {
-  segment: "Segment",
-  verbForm: "Verb form",
-  verbAspect: "Aspect",
-  verbMood: "Mood",
-  verbVoice: "Voice",
-  nominalState: "State",
-  nominalCase: "Case",
-  derivedNoun: "Derived noun",
-  specialGroup: "Special",
-  person: "Person",
-  gender: "Gender",
-  number: "Number",
-};
 
 export default function WordDetailPanel({
   word,
@@ -41,7 +26,6 @@ export default function WordDetailPanel({
     };
   }, [word.root]);
 
-  const features = Object.entries(word.features).filter(([, v]) => v !== null);
   const otherOccurrences =
     root?.occurrences.filter(
       (o) => !(o.surah === word.surah && o.ayah === word.ayah && o.location === word.location)
@@ -65,7 +49,7 @@ export default function WordDetailPanel({
             <>
               <dt>Part of speech</dt>
               <dd>
-                {word.posAr && <span className="arabic">{word.posAr}</span>} {word.pos}
+                {word.posAr && <span className="arabic">{word.posAr}</span>} {word.tag ?? word.pos}
               </dd>
             </>
           )}
@@ -81,12 +65,6 @@ export default function WordDetailPanel({
               <dd className="arabic">{word.rootAr ?? word.root}</dd>
             </>
           )}
-          {features.map(([key, value]) => (
-            <Fragment key={key}>
-              <dt>{FEATURE_LABELS[key] ?? key}</dt>
-              <dd>{value}</dd>
-            </Fragment>
-          ))}
           {word.rel && word.rel !== "NonRel" && (
             <>
               <dt>Grammatical role</dt>

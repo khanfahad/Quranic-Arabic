@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Amiri, Inter } from "next/font/google";
+import { Amiri_Quran, Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const arabicFont = Amiri({
+const arabicFont = Amiri_Quran({
   subsets: ["arabic"],
-  weight: ["400", "700"],
+  weight: ["400"],
   variable: "--font-arabic",
   display: "swap",
 });

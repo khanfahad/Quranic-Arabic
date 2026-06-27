@@ -25,6 +25,7 @@ export interface WordToken {
   gloss: string | null;
   pos: string | null;
   posAr: string | null;
+  tag: string | null;
   lemma: string | null;
   lemmaAr: string | null;
   root: string | null;

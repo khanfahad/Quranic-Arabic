@@ -52,7 +52,6 @@ a:hover {
 .site-title {
   font-family: var(--font-arabic), serif;
   font-size: 1.5rem;
-  font-weight: 700;
   color: var(--ink);
 }
 .site-title-en {
@@ -207,10 +206,15 @@ button.secondary {
   line-height: 2.6;
 }
 
+.word-group {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .word-token {
   font-family: var(--font-arabic), serif;
   cursor: pointer;
-  padding: 0.05rem 0.3rem;
+  padding: 0.05rem 0.05rem;
   border-radius: 6px;
   border-bottom: 2px solid transparent;
 }

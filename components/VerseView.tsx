@@ -1,10 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import type { Ayah } from "@/lib/types";
+import type { Ayah, WordToken as WordTokenType } from "@/lib/types";
 import WordToken from "./WordToken";
 import IrabTable from "./IrabTable";
 import WordDetailPanel from "./WordDetailPanel";
+
+// The treebank splits each orthographic word into morphological segments
+// (e.g. the "ال" prefix and its noun are separate tokens). Group consecutive
+// segments that belong to the same word (location's surah:ayah:word part) so
+// they render as one joined unit instead of being torn apart by word-strip's
+// flex gap.
+function groupByWord(words: WordTokenType[]): WordTokenType[][] {
+  const groups: WordTokenType[][] = [];
+  let lastKey: string | null = null;
+  for (const w of words) {
+    const key = w.location ? w.location.split(":").slice(0, 3).join(":") : `_${w.id}`;
+    if (key === lastKey && groups.length > 0) {
+      groups[groups.length - 1].push(w);
+    } else {
+      groups.push([w]);
+      lastKey = key;
+    }
+  }
+  return groups;
+}
 
 export default function VerseView({
   ayah,
@@ -29,13 +49,17 @@ export default function VerseView({
         {surah}:{ayah.ayah}
       </span>
       <div className="word-strip">
-        {ayah.words.map((w) => (
-          <WordToken
-            key={w.id}
-            word={w}
-            selected={w.id === selectedWordId}
-            onClick={() => setSelectedWordId(w.id === selectedWordId ? null : w.id)}
-          />
+        {groupByWord(ayah.words).map((group) => (
+          <span className="word-group" key={group[0].id}>
+            {group.map((w) => (
+              <WordToken
+                key={w.id}
+                word={w}
+                selected={w.id === selectedWordId}
+                onClick={() => setSelectedWordId(w.id === selectedWordId ? null : w.id)}
+              />
+            ))}
+          </span>
         ))}
       </div>
       {ayah.translation && <p className="translation">{ayah.translation}</p>}

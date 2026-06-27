@@ -5,7 +5,7 @@ export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 // Must match WORD_FIELD_ORDER in scripts/build-data.py exactly.
 const WORD_FIELD_ORDER = [
   "id", "isElided", "location", "textUthmani", "textImlaai", "transliteration",
-  "gloss", "pos", "posAr", "lemma", "lemmaAr", "root", "rootAr",
+  "gloss", "pos", "posAr", "tag", "lemma", "lemmaAr", "root", "rootAr",
   "segment", "verbForm", "verbAspect", "verbMood", "verbVoice", "nominalState",
   "nominalCase", "derivedNoun", "specialGroup", "person", "gender", "number",
   "rel", "relAr", "headId", "headAyah", "headText",
@@ -40,6 +40,7 @@ function decodeWord(raw: RawWord, surah: number, ayah: number): WordToken {
     gloss: obj.gloss as string | null,
     pos: obj.pos as string | null,
     posAr: obj.posAr as string | null,
+    tag: obj.tag as string | null,
     lemma: obj.lemma as string | null,
     lemmaAr: obj.lemmaAr as string | null,
     root: obj.root as string | null,
