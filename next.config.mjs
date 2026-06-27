@@ -1,5 +1,5 @@
 const isGithubPages = process.env.GITHUB_PAGES === "true";
-const repoName = "quranic-arabic";
+const repoName = "Quranic-Arabic";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
