@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
-import { basePath, fetchRoot } from "@/lib/data";
+import { fetchRoot } from "@/lib/data";
 import type { RootEntry, WordToken } from "@/lib/types";
 
 const FEATURE_LABELS: Record<string, string> = {
@@ -121,7 +121,7 @@ export default function WordDetailPanel({
                   <span className="occ-gloss">{o.gloss}</span>
                   <Link
                     className="occ-loc"
-                    href={`${basePath}/surah/${o.surah}#ayah-${o.ayah}`}
+                    href={`/surah/${o.surah}#ayah-${o.ayah}`}
                   >
                     {o.surah}:{o.ayah}
                   </Link>

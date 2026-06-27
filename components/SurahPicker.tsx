@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { basePath } from "@/lib/data";
 import type { SurahMeta } from "@/lib/types";
 import RandomVerseButton from "./RandomVerseButton";
 
@@ -15,7 +14,7 @@ export default function SurahPicker({ surahs }: { surahs: SurahMeta[] }) {
   const maxAyah = currentSurah?.ayahCount ?? 7;
 
   function goToVerse() {
-    router.push(`${basePath}/surah/${surahId}#ayah-${Math.min(ayah, maxAyah)}`);
+    router.push(`/surah/${surahId}#ayah-${Math.min(ayah, maxAyah)}`);
   }
 
   return (

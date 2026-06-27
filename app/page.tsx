@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { basePath, fetchSurahs } from "@/lib/data";
+import { fetchSurahs } from "@/lib/data";
 import type { SurahMeta } from "@/lib/types";
 import SurahPicker from "@/components/SurahPicker";
 
@@ -27,7 +27,7 @@ export default function HomePage() {
       ) : (
         <div className="surah-grid">
           {surahs.map((s) => (
-            <Link key={s.id} href={`${basePath}/surah/${s.id}`}>
+            <Link key={s.id} href={`/surah/${s.id}`}>
               <span className="num">{s.id}</span>
               <span className="arabic">{s.nameArabic}</span> {s.nameTransliteration}
             </Link>
